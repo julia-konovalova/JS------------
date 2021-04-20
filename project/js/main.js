@@ -23,30 +23,24 @@ const products = [{
 ];
 
 //Добавила разметку для изображения товара
-const renderProduct = (title, image, price) => {
+const renderProduct = (item, image = "./images/product-item_image-default.jpg") => {
     return `<div class="product-item">
-    <h3>${title}
+    <h3>${item.title}
     </h3>
-    <img class="product-item_image"src="${image}"alt="">
-    <p>${price}
+    <img class="product-item_image"src="${item.image}"alt="">
+    <p>${item.price}
     </p>
-    <button class="by-btn">Добавить в корзину</button></div>`;
+    <button class="buy-btn">Добавить в корзину</button></div>`;
 }
 
     ;
 
 const renderProducts = (list = []) => {
 
-    // Для сокращения убрала фигурные скобки и слово return
-    //  В качестве параметра по умолчанию в параметр стрелочной функции ниже
-    // хочу вставить image = "./ images / product - item_image -default.jpg",
-    // но не получается
-    const productList = list.map((item) => renderProduct(item.title, item.image, item.price)
-    );
-    // Запятые убрали, выводя не весь массив разметки, а каждый элемент по очереди
-    productList.forEach(function (item) {
-        document.querySelector('.products').innerHTML += item;
-    });
+    document.querySelector('.products').insertAdjacentHTML("beforeend", list.map((item) => renderProduct(item)).join(''));
 }
+
+    ;
+
 
 renderProducts(products);

@@ -1,0 +1,48 @@
+@import url(https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Lato, sans-serif;
+}
+
+header {
+    background-color: blue;
+    padding: 50px;
+    height: 150px;
+}
+
+.btn-cart {
+    border: 1px solid aquamarine;
+    color: #000;
+}
+
+.buy-btn {
+    border: 1px solid black;
+    color: #000;
+}
+
+.products {
+    display: flex;
+    justify-content: space-between;
+    background-color: lightblue;
+    margin: 0 auto;
+    width: 1080px;
+    padding: 30px;
+}
+
+.product-item {
+    border: 1px solid black;
+    border-radius: 10%;
+    background-color: white;
+    padding: 20px;
+}
+
+.product-item_image {
+    height: 100px;
+    width: 150px;
+}
