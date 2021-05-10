@@ -42,6 +42,46 @@
 //     }
 //   }
 // }
+
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+let getRequest = (url, callback) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status !== 200) {
+                console.log('Error');
+            } else {
+                callback(xhr.responseText)
+            }
+        }
+    };
+    xhr.send();
+}
+
+
+//1. переделано на промисы, но не понимаю, почему не рендерится на странице?
+//let getRequest = (url) => {
+//    return new Promise((resolve, reject) => {
+//        let xhr = new XMLHttpRequest();
+//        xhr.open('GET', url, true);
+//        xhr.onreadystatechange = () => {
+//            if (xhr.readyState === 4) {
+//                if (xhr.status !== 200) {
+//                    reject('Error');
+//                }
+//                else {
+//                    resolve(xhr.responseText);
+//                }
+//            }
+//        };
+//        xhr.send();
+//    })
+//};
+
+//-------------------------------------------
+
 class ProductList {
     constructor(container = '.products') {
         this.container = container;
@@ -49,16 +89,20 @@ class ProductList {
         this._allProducts = []; // массив экземпляров товаров на основе this._goods
 
         this._fetchGoods();
-        this._render();
+        //this._render();
     }
 
     _fetchGoods() {
-        this._goods = [
-            { id: 1, title: 'Notebook', price: 20000 },
-            { id: 2, title: 'Mouse', price: 1500 },
-            { id: 3, title: 'Keyboard', price: 5000 },
-            { id: 4, title: 'Gamepad', price: 4500 },
-        ];
+        // this._goods = [
+        //     { id: 1, title: 'Notebook', price: 20000 },
+        //     { id: 2, title: 'Mouse', price: 1500 },
+        //     { id: 3, title: 'Keyboard', price: 5000 },
+        //      { id: 4, title: 'Gamepad', price: 4500 },
+        //  ];
+        getRequest(`${API}/catalogData.json`, (data) => {
+            this._goods = JSON.parse(data);
+            this._render();
+        });
     }
 
     _render() {
@@ -84,9 +128,9 @@ class ProductList {
 
 class ProductItem {
     constructor(product, img = 'https://via.placeholder.com/200x150') {
-        this.title = product.title;
+        this.name = product.product_name;
         this.price = product.price;
-        this.id = product.id;
+        this.id = product.id_product;
         this.img = img;
     }
 
@@ -94,7 +138,7 @@ class ProductItem {
         return `<div class="product-item" data-id="${this.id}">
                 <img src="${this.img}" alt="Some img">
                 <div class="desc">
-                    <h3>${this.title}</h3>
+                    <h3>${this.name}</h3>
                     <p>${this.price} \u20bd</p>
                     <button class="buy-btn">Купить</button>
                 </div>
