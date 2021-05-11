@@ -172,3 +172,4 @@ console.log(catalog.sumGoodsPrice());
 //
 // renderProducts(products);
 
+
